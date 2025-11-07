@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ATM — Retiro con Autómata Finito</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+</head>
+<body>
+  <div class="wrap">
+    <div class="card">
+      <h1>Retiro (Autómata Finito Determinista)</h1>
+      <p class="sub">
+        Estado = monto restante. Estado inicial = monto solicitado; estado final = <b>0</b>.<br>
+        Alfabeto = billetes {10, 20, 50, 100}. Límite: ${{ max_retiro }}.
+      </p>
+
+      <div class="row">
+        <label for="monto" class="muted">Monto:</label>
+        <input id="monto" type="number" min="10" max="{{ max_retiro }}" step="10" value="100" />
+
+        <div class="seg" role="tablist" aria-label="modo">
+          <button id="modoAuto" class="active" aria-pressed="true">Automático</button>
+          <button id="modoManual" aria-pressed="false">Manual</button>
+        </div>
+
+        <button id="simular" class="btn primary">Iniciar</button>
+
+        <div class="spacer"></div>
+
+        <div class="row quicks">
+          <!-- Atajos de monto -->
+          <button class="btn flat q" data-q="10">$10</button>
+          <button class="btn flat q" data-q="20">$20</button>
+          <button class="btn flat q" data-q="50">$50</button>
+          <button class="btn flat q" data-q="100">$100</button>
+          <button class="btn flat q" data-q="150">$150</button>
+          <button class="btn flat q" data-q="200">$200</button>
+          <button class="btn flat q" data-q="250">$250</button>
+          <button class="btn flat q" data-q="300">$300</button>
+          <button class="btn flat q" data-q="350">$350</button>
+          <button class="btn flat q" data-q="400">$400</button>
+          <button class="btn flat q" data-q="450">$450</button>
+          <button class="btn flat q" data-q="500">$500</button>
+        </div>
+      </div>
+
+      <div id="manualControls" class="row" style="display:none">
+        <span class="muted">Entregar billete:</span>
+        <button class="btn bill" data-b="100">$100</button>
+        <button class="btn bill" data-b="50">$50</button>
+        <button class="btn bill" data-b="20">$20</button>
+        <button class="btn bill" data-b="10">$10</button>
+        <button id="deshacer" class="btn flat">Deshacer</button>
+        <button id="reiniciar" class="btn flat">Reiniciar</button>
+        <span id="restante" class="pill">Restante: 0</span>
+      </div>
+
+      <div id="resumen" class="panel" aria-live="polite"></div>
+
+      <div id="timeline" class="timeline" aria-label="línea de tiempo de estados"></div>
+
+      <table id="tabla" style="display:none">
+        <thead>
+          <tr>
+            <th>Paso</th>
+            <th>Estado q</th>
+            <th>Transición (billete)</th>
+            <th>δ(q,b)</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+
+      <p class="muted" style="margin-top:10px">
+        Definición: <span class="kbd">δ(q, b) = q − b</span> si <span class="kbd">q ≥ b</span>.  
+        Si no existe transición válida, se detiene (estado trampa).
+      </p>
+    </div>
+  </div>
+
+  <script>
+  window.__ATM__ = {{ {'MAX': max_retiro} | tojson }};
+</script>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
+</html>
