@@ -3,46 +3,78 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>ATM — Retiro Manual (Autómata Finito)</title>
+  <title>🏧 ATM — Retiro Manual (Autómata Finito)</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
   <div class="wrap">
     <div class="card">
+
+      <!-- Header dinámico con reloj -->
+      <div class="atm-header">
+        <div class="brand">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="2" y="5" width="20" height="14" rx="3"/>
+            <line x1="2" y1="10" x2="22" y2="10"/>
+          </svg>
+          ATM · Autómata Finito
+        </div>
+        <div class="live-info">
+          <span class="clock" id="reloj">--:--:--</span>
+          <span class="date" id="fecha">--/--/----</span>
+        </div>
+      </div>
+
+      <!-- Indicador de estado -->
+      <div class="status-bar">
+        <div class="status-dot"></div>
+        <span>Sistema en línea &nbsp;·&nbsp; Cajero disponible &nbsp;·&nbsp; Límite máximo: <b>${{ max_retiro }}</b></span>
+      </div>
+
       <h1>Retiro Manual (AFD)</h1>
       <p class="sub">
         Estado = monto restante. Estado inicial = monto solicitado; estado final = <b>0</b>.<br>
-        Alfabeto = billetes {10, 20, 50, 100}. Límite: ${{ max_retiro }}.
+        Alfabeto = billetes {10, 20, 50, 100}.
       </p>
 
       <div class="row">
         <label for="monto" class="muted">Monto:</label>
         <input id="monto" type="number" min="10" max="{{ max_retiro }}" step="10" value="100" />
-        <button id="iniciar" class="btn primary">Iniciar retiro</button>
+        <button id="iniciar" class="btn primary">🚀 Iniciar retiro</button>
       </div>
-            <div class="row quicks">
-  <button class="btn flat q" data-q="10">$10</button>
-  <button class="btn flat q" data-q="20">$20</button>
-  <button class="btn flat q" data-q="50">$50</button>
-  <button class="btn flat q" data-q="100">$100</button>
-  <button class="btn flat q" data-q="150">$150</button>
-  <button class="btn flat q" data-q="200">$200</button>
-  <button class="btn flat q" data-q="250">$250</button>
-  <button class="btn flat q" data-q="300">$300</button>
-  <button class="btn flat q" data-q="350">$350</button>
-  <button class="btn flat q" data-q="400">$400</button>
-  <button class="btn flat q" data-q="450">$450</button>
-  <button class="btn flat q" data-q="500">$500</button>
-</div>
+
+      <!-- Barra de progreso del retiro -->
+      <div class="progress-wrap">
+        <div class="progress-bar" id="progressBar" style="width:0%"></div>
+      </div>
+      <div class="progress-label"><span id="progressLabel">0% completado</span></div>
+
+      <!-- Montos rápidos -->
+      <div class="row quicks">
+        <button class="btn flat q" data-q="10">$10</button>
+        <button class="btn flat q" data-q="20">$20</button>
+        <button class="btn flat q" data-q="50">$50</button>
+        <button class="btn flat q" data-q="100">$100</button>
+        <button class="btn flat q" data-q="150">$150</button>
+        <button class="btn flat q" data-q="200">$200</button>
+        <button class="btn flat q" data-q="250">$250</button>
+        <button class="btn flat q" data-q="300">$300</button>
+        <button class="btn flat q" data-q="350">$350</button>
+        <button class="btn flat q" data-q="400">$400</button>
+        <button class="btn flat q" data-q="450">$450</button>
+        <button class="btn flat q" data-q="500">$500</button>
+      </div>
+
+      <!-- Controles de billetes -->
       <div id="manualControls" class="row">
-        <span class="muted">Entregar billete:</span>
+        <span class="muted">💵 Entregar billete:</span>
         <button class="btn bill" data-b="100">$100</button>
         <button class="btn bill" data-b="50">$50</button>
         <button class="btn bill" data-b="20">$20</button>
         <button class="btn bill" data-b="10">$10</button>
-        <button id="deshacer" class="btn flat">Deshacer</button>
-        <button id="reiniciar" class="btn flat">Reiniciar</button>
-        <span id="restante" class="pill">Restante: 0</span>
+        <button id="deshacer" class="btn flat">↩ Deshacer</button>
+        <button id="reiniciar" class="btn flat">🔄 Reiniciar</button>
+        <span id="restante" class="pill">Restante: $0</span>
       </div>
 
       <div id="resumen" class="panel" aria-live="polite"></div>
@@ -51,16 +83,21 @@
       <table id="tabla" style="display:none">
         <thead>
           <tr>
-            <th>Paso</th>
+            <th>#</th>
             <th>Estado q</th>
-            <th>Transición (billete)</th>
-            <th>δ(q,b)</th>
+            <th>Billete</th>
+            <th>δ(q, b)</th>
           </tr>
         </thead>
         <tbody></tbody>
       </table>
 
-      
+      <!-- Footer -->
+      <div class="atm-footer">
+        <span>Autómata Finito Determinista (AFD) &nbsp;·&nbsp; Teoría de la Computación</span>
+        <span id="contadorBilletes">0 billetes entregados</span>
+      </div>
+
     </div>
   </div>
 
