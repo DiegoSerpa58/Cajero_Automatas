@@ -13,7 +13,7 @@ Alfabeto = {10,20,50,100}. Límite de retiro: $500.
 ```bash
 cd atm-automata
 pip install -r requirements.txt
-
+```
 ## Evidencias (capturas)
 ## Evidencias (capturas)
 
