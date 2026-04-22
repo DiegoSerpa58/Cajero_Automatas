@@ -17,7 +17,7 @@ pip install -r requirements.txt
 ## Evidencias (capturas)
 
 ### Azure Static Web Apps (Plan Free)
-<img src="Images/catura1.png" alt="Azure Overview" width="459" />
+<img src="Images/captura1.png" alt="Azure Overview" width="459" />
 
 ### GitHub Actions (deploy exitoso)
 <img src="Images/captura2.png" alt="GitHub Actions" width="829" />
