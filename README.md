@@ -15,6 +15,7 @@ cd atm-automata
 pip install -r requirements.txt
 
 ## Evidencias (capturas)
+
 ### Azure Static Web Apps (Plan Free)
 <img src="https://github.com/user-attachments/assets/6734e880-f311-47a2-8107-16b8d8b4e0ce" width="459" height="190" alt="Azure Overview" />
 
@@ -23,7 +24,4 @@ pip install -r requirements.txt
 
 ### SecurityHeaders (A)
 <img src="https://github.com/user-attachments/assets/b6d675f4-5e93-4cd8-8246-a3ad5ada092d" width="812" height="378" alt="SecurityHeaders" />
-
-
->
 
